@@ -1,0 +1,64 @@
+{
+  "parameters": [
+    {
+      "display": "Virtual CPUs Number",
+      "name": "number_cpus",
+      "type": "list",
+      "value": [1,2,4,8,16,32,64]
+    },
+    {
+      "display": "Memory size (RAM)",
+      "name": "memory_size",
+      "type": "list",
+      "value": ["1 GB","2 GB","4 GB","8 GB","16 GB","32 GB"]
+    },
+    {
+      "display": "Volume storage size",
+      "name": "volume_storage",
+      "type": "list",
+      "value": ["100 GB","1 TB"]
+    },
+    {
+      "display": "SSH public key",
+      "name": "instance_key_pub",
+      "type": "text",
+      "value": "Paste here your public key"
+    },
+    {
+      "display": "Galaxy version",
+      "name": "version",
+      "type": "list",
+      "value": ["master"]
+    },    
+    {
+      "display": "Instance description (Galaxy brand)",
+      "name": "instance_description",
+      "type": "text",
+      "value": "ELIXIR-ITA Galaxy test"
+    },
+    {
+      "display": "Galaxy administrator username",
+      "name": "user",
+      "type": "text",
+      "value": "admin username"
+    },
+    {
+      "display": "Galaxy administrator mail address",
+      "name": "admin_email",
+      "type": "text",
+      "value": "admin mail address"
+    },
+    {
+      "display": "Disable anonymous access (force everyone to log in)",
+      "name": "disable_anonymous_access",
+      "type": "list",
+      "value": ["Yes","No"]
+    },
+    {
+      "display": "Galaxy flavor",
+      "name": "galaxy_flavour",
+      "type": "list",
+      "value": ["no-tools","NGS"]
+    }
+  ]
+}
