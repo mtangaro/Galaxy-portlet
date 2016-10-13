@@ -152,11 +152,14 @@
             /*
              * Fills the job table from incoming JSON data
              */
-            function fillJobTable(data) {
+            function fillJobTable(data, current) {
+                $('#jobsDiv').html('');
                 var tableRows='';
                 for (var i = 0; i < data.length; i++) {
-                    tableRows+=addJobRecord(i,data[i]);                                        
-                }                
+                    if((i >= current*jobLimit) && (i < (current+1)*jobLimit)) {
+                        tableRows+=addJobRecord(i,data[i]);
+                    }                    
+                }                        
                 jobsTable =
                  '<table id="jobTable" class="table table-responsive tablesorter">'
                 +'	<colgroup>'
@@ -183,6 +186,13 @@
                 +'<tfoot style="size:0px">'
                 +'</tfoot>'
                 +'</table>';
+
+                jobsTable += '<div id="pagination" align="center"><ul class="pagination pagination-sm">';
+                for(var i=0; i<(Jdiv+1); i++) {
+                    jobsTable += '<li><a href="javascript:void(0)" onClick=fillJobTable(jobsAll,'+i+')>'+(i+1)+'</a></li>';
+                }
+                jobsTable += '</ul></div>';
+
                 // Add table
                 $('#jobsDiv').append(jobsTable);
                 // Compress childs
@@ -223,11 +233,15 @@
                          +webapp_settings.app_id, 
                     dataType: "json",                    
                     success: function(data) {
-                            if(data.tasks.length>0)
-                                fillJobTable(data.tasks.sort( predicatBy("id") ));
-                            else
-                                emptyJobTable();
-                        }, 
+                        if(data.tasks.length>0) {
+                            jobsAll = data.tasks;
+                            jobsListLength = data.tasks.length;
+                            Jdiv = Math.floor(jobsListLength/jobLimit);
+                            fillJobTable(data.tasks.sort( predicatBy("id") ), 0);
+                        }
+                        else
+                    emptyJobTable();
+                    }, 
                     error: function(jqXHR, textStatus, errorThrown) {
                             alert(jqXHR.status);
                         }                   

@@ -9,6 +9,9 @@
             var defaultJson = myJson;
             var jsonArr; 
             var token = null;
+            var jobLimit = 5;
+            var Jdiv = 0;
+            
             var webapp_settings = {
                 apiserver_url: ''
                ,apiserver_path : '/apis'

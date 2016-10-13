@@ -1,4 +1,5 @@
 {
+  "version_of_portlet_description": 0.1,
   "parameters": [
     {
       "display": "Virtual CPUs Number",

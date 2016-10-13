@@ -51,13 +51,6 @@ public class GalaxyPortlet extends MVCPortlet {
         return log;
     }
 
-    public void randomNumber(ActionRequest request, ActionResponse renderResponse){
-        logEvent("# randomNumber()");
-        Random generator = new Random();
-        double number = generator.nextDouble();
-        request.setAttribute("randomNumber", String.valueOf(number));
-    }
-
     @Override
     public void serveResource(ResourceRequest resourceRequest,
             ResourceResponse resourceResponse) throws IOException,
@@ -112,15 +105,14 @@ public class GalaxyPortlet extends MVCPortlet {
     private String readJsonFile(String pathToFile) {
         String json = readFile(pathToFile);
         if(json == null) {
-            json = "{  \"parameters\": [    {      \"display\": \"Virtual CPUs Number\",      \"name\": \"number_cpus\",      \"type\": \"list\",      \"value\": [1,2,4,8,16,32,64]    },    {      \"display\": \"Memory size (RAM)\",      \"name\": \"memory_size\",      \"type\": \"list\",      \"value\": [\"1 GB\",\"2 GB\",\"4 GB\",\"8 GB\",\"16 GB\",\"32 GB\"]    },    {      \"display\": \"Volume storage size\",      \"name\": \"volume_storage\",      \"type\": \"list\",      \"value\": [\"100 GB\",\"1 TB\"]    },    {      \"display\": \"SSH public key\",      \"name\": \"instance_key_pub\",      \"type\": \"text\",      \"value\": \"Paste here your public key\"    },    {      \"display\": \"Galaxy version\",      \"name\": \"version\",      \"type\": \"list\",      \"value\": [\"master\"]    },        {      \"display\": \"Instance description (Galaxy brand)\",      \"name\": \"instance_description\",      \"type\": \"text\",      \"value\": \"ELIXIR-ITA Galaxy test\"    },    {      \"display\": \"Galaxy administrator username\",      \"name\": \"user\",      \"type\": \"text\",      \"value\": \"admin username\"    },    {      \"display\": \"Galaxy administrator mail address\",      \"name\": \"admin_email\",      \"type\": \"text\",      \"value\": \"admin mail address\"    },    {      \"display\": \"Disable anonymous access (force everyone to log in)\",      \"name\": \"disable_anonymous_access\",      \"type\": \"list\",      \"value\": [\"Yes\",\"No\"]    },    {      \"display\": \"Galaxy flavor\",      \"name\": \"galaxy_flavour\",      \"type\": \"list\",      \"value\": [\"no-tools\",\"NGS\"]    }  ]}";
+            json = "{\n  \"version_of_portlet_description\": 0.1,\n  \"parameters\": [\n    {\n      \"display\": \"Virtual CPUs Number\",\n      \"name\": \"number_cpus\",\n      \"type\": \"list\",\n      \"value\": [1,2,4,8,16,32,64]\n    },\n    {\n      \"display\": \"Memory size (RAM)\",\n      \"name\": \"memory_size\",\n      \"type\": \"list\",\n      \"value\": [\"1 GB\",\"2 GB\",\"4 GB\",\"8 GB\",\"16 GB\",\"32 GB\"]\n    },\n    {\n      \"display\": \"Volume storage size\",\n      \"name\": \"volume_storage\",\n      \"type\": \"list\",\n      \"value\": [\"100 GB\",\"1 TB\"]\n    },\n    {\n      \"display\": \"SSH public key\",\n      \"name\": \"instance_key_pub\",\n      \"type\": \"text\",\n      \"value\": \"Paste here your public key\"\n    },\n    {\n      \"display\": \"Galaxy version\",\n      \"name\": \"version\",\n      \"type\": \"list\",\n      \"value\": [\"master\"]\n    },    \n    {\n      \"display\": \"Instance description (Galaxy brand)\",\n      \"name\": \"instance_description\",\n      \"type\": \"text\",\n      \"value\": \"ELIXIR-ITA Galaxy test\"\n    },\n    {\n      \"display\": \"Galaxy administrator username\",\n      \"name\": \"user\",\n      \"type\": \"text\",\n      \"value\": \"admin username\"\n    },\n    {\n      \"display\": \"Galaxy administrator mail address\",\n      \"name\": \"admin_email\",\n      \"type\": \"text\",\n      \"value\": \"admin mail address\"\n    },\n    {\n      \"display\": \"Disable anonymous access (force everyone to log in)\",\n      \"name\": \"disable_anonymous_access\",\n      \"type\": \"list\",\n      \"value\": [\"Yes\",\"No\"]\n    },\n    {\n      \"display\": \"Galaxy flavor\",\n      \"name\": \"galaxy_flavour\",\n      \"type\": \"list\",\n      \"value\": [\"no-tools\",\"NGS\"]\n    }\n  ]\n}";
         }
         return json;
     }
 
     @Override
     public void doView(RenderRequest renderRequest, RenderResponse renderResponse) throws IOException, PortletException {
-        renderRequest.setAttribute("json-array", readJsonFile("template.json"));
-        //renderRequest.setAttribute("token", readFile("/tmp/token"));
+        renderRequest.setAttribute("json-array", readJsonFile("galaxy-template.json"));
         super.doView(renderRequest, renderResponse);
     }
 }
