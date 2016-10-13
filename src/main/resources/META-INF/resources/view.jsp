@@ -11,6 +11,7 @@
             var token = null;
             var jobLimit = 5;
             var Jdiv = 0;
+            var LI="LI_0";
             
             var webapp_settings = {
                 apiserver_url: ''

@@ -143,11 +143,12 @@
                             if(getNumJobs() > 0)  
                                 $('#jobTable').find('#'+job_id).remove();
                             else emptyJobTable();
+                            prepareJobTable();
                         }, 
                     error: function(jqXHR, textStatus, errorThrown) {
                             alert(jqXHR.status);
                         }                   
-               });            
+               }); 
             }
             /*
              * Fills the job table from incoming JSON data
@@ -189,12 +190,16 @@
 
                 jobsTable += '<div id="pagination" align="center"><ul class="pagination pagination-sm">';
                 for(var i=0; i<(Jdiv+1); i++) {
-                    jobsTable += '<li><a href="javascript:void(0)" onClick=fillJobTable(jobsAll,'+i+')>'+(i+1)+'</a></li>';
+                    jobsTable += '<li id="LI_'+i+'"><a href="javascript:void(0)" onClick=fillJobTable(jobsAll,'+i+')>'+(i+1)+'</a></li>';
                 }
                 jobsTable += '</ul></div>';
 
                 // Add table
                 $('#jobsDiv').append(jobsTable);
+                newLI="LI_"+current;
+                document.getElementById(LI).className = "";
+                document.getElementById(newLI).className = "active";
+                LI = newLI;
                 // Compress childs
                 $('.tablesorter-childRow td').hide();
                 // Sort table
@@ -236,7 +241,7 @@
                         if(data.tasks.length>0) {
                             jobsAll = data.tasks;
                             jobsListLength = data.tasks.length;
-                            Jdiv = Math.floor(jobsListLength/jobLimit);
+                            Jdiv = Math.floor((jobsListLength-1)/jobLimit);
                             fillJobTable(data.tasks.sort( predicatBy("id") ), 0);
                         }
                         else
@@ -349,6 +354,7 @@
                                     }, 
                                     error: function(jqXHR, textStatus, errorThrown) {
                                             console.log(jqXHR.status);
+                                            prepareJobTable();
                                     }
                                 });
                         }
