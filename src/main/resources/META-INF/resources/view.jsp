@@ -74,8 +74,30 @@
                 var i;
                 var k;
                 printDefault();
-                var out = '<div id="params-modal">';
-                for(i = 0; i < jsonArr.length; i++) {
+                jsonTab = myJson.tabs;
+                tabBegin = '<ul class="nav nav-tabs">'; 
+                var tabs = null;
+                var makeTabs = false;
+                var maxTab = 0;
+                if(jsonTab != null) {
+                    maxTab = jsonTab.length;
+                    tabs = new Array(maxTab);
+                    makeTabs = true;
+                    for(var i=0; i<maxTab; i++) {
+                        if(i == 0) {
+                            tabBegin += '<li class="active"><a data-toggle="tab" href="#menu'+i+'">'+jsonTab[i]+'</a></li>';
+                        }
+                        else {
+                            tabBegin += '<li><a data-toggle="tab" href="#menu'+i+'">'+jsonTab[i]+'</a></li>';
+                        }
+                        tabs[i] = '';
+                    }
+                }
+                tabBegin += '</ul>'; 
+                var out;
+                var globalOut;
+                for(var i = 0; i < jsonArr.length; i++) {
+                    out = '';
                     if(jsonArr[i].hasOwnProperty('display')){
                         out += '<p><b>' + jsonArr[i].display + '</b>';
                     }
@@ -113,8 +135,42 @@
                             break;
                     }
                     out += '</p>';
+                    if((jsonArr[i].tab != null) && makeTabs) {
+                        var index = jsonArr[i].tab;
+                        if(index < maxTab) {
+                            tabs[jsonArr[i].tab] += out;
+                        }
+                        else {
+                            globalOut += out;
+                        }
+                    }
+                    else {
+                        globalOut += out;
+                    }
                 }
-                out += '</div>';
+                if(jsonTab != null) {
+                    out = '<div id="params-modal">';
+                    out += globalOut;
+                    out += tabBegin;
+                    out += '<div class="tab-content">';
+                    for(var i=0; i < jsonTab.length; i++) {
+                        if(i == 0) {
+                            out += '<div id="menu'+i+'" class="tab-pane fade in active">';
+                        }
+                        else {
+                            out += '<div id="menu'+i+'" class="tab-pane fade">';
+                        }
+                        out += tabs[i];
+                        out += '</div>';
+                    }
+                    out += '</div>';
+                    out += '</div>';
+                }
+                else {
+                    out = '<div id="params-modal">';
+                    out += globalOut;
+                    out += '</div>';
+                }
                 var myDiv = document.getElementById("modalContent");
                 myDiv.innerHTML = myDiv.innerHTML + out;
             }
