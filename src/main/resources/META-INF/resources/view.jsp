@@ -95,7 +95,7 @@
                 }
                 tabBegin += '</ul>'; 
                 var out;
-                var globalOut;
+                var globalOut='';
                 for(var i = 0; i < jsonArr.length; i++) {
                     out = '';
                     if(jsonArr[i].hasOwnProperty('display')){
