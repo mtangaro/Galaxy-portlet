@@ -354,7 +354,9 @@
                                     }, 
                                     error: function(jqXHR, textStatus, errorThrown) {
                                             console.log(jqXHR.status);
-                                            prepareJobTable();
+                                            if(jqXHR.status == 404) {
+                                                prepareJobTable();
+                                            }
                                     }
                                 });
                         }
@@ -375,7 +377,7 @@
                              + currentdate.getSeconds();
                 $('#submitButton').show();
                 $('#modal-content').html('');                
-                $('#jobDescription').val('Galaxy job desc '+datetime);
+                $('#jobDescription').val('Job desc '+datetime);
                 $("#helloTesterModal").modal();
             }
             /*

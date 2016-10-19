@@ -12,6 +12,7 @@
             var jobLimit = 5;
             var Jdiv = 0;
             var LI="LI_0";
+            var applicationLabel = "toscaGalaxyTest";
             
             var webapp_settings = {
                 apiserver_url: ''
@@ -19,17 +20,24 @@
                ,apiserver_ver  : 'v1.0'
                ,app_id         : 103               
             };
-            /* Settings for sgw.indigo-datacloud.eu
-            var webapp_settings = {
-                apiserver_proto: 'https'
-               ,apiserver_host : 'sgw.indigo-datacloud.eu'
-               ,apiserver_port : '443'
-               ,apiserver_path : '/apis'
-               ,apiserver_ver  : 'v1.0'
-               ,username       : 'brunor'
-               ,app_id         : 1
-            };
-            */
+            function changeApp(app) {
+                var id = 103;
+                $('#mainTitle').html(app.toUpperCase() + " application");
+                switch(app) {
+                    case "galaxy":
+                        id = 103;
+                        applicationLabel = "toscaGalaxyTest";
+                        callServer("json", app) ;
+                        break;
+                    case "lifewatch":
+                        id = 104;
+                        applicationLabel = "toscaOnecloudTest";
+                        callServer("json", app) ;
+                        break;
+                }
+                webapp_settings.app_id = id;
+                prepareJobTable();                 // Fills the job table
+            }
             /*
              * Change variable below to change delay of check status loop
              */
@@ -191,17 +199,44 @@
                             paramJson.parameters[jsonArr[i].name] = out;
                     }
                 }
-                callServeResource();
+                callServer("submit", null);
             }
-            function callServeResource() {
-                var myData = {<portlet:namespace />json: JSON.stringify(paramJson)};
-                AUI().use('aui-io-request', function(A){
-                    A.io.request('<%=resourceURL.toString()%>', {
-                    dataType: 'json',
-                    method: 'post',
-                    data: myData
-                    });
-                });
+            function callServer(call, opt) {
+                switch(call) {
+                    case "submit":
+                        var myData = {
+                            <portlet:namespace />json: JSON.stringify(paramJson),
+                            <portlet:namespace />path: applicationLabel
+                        };
+                        AUI().use('aui-io-request', function(A){
+                                A.io.request('<%=resourceURL.toString()%>', {
+                                dataType: 'json',
+                                method: 'post',
+                                data: myData
+                            });
+                        });
+                        break;
+                    case "json":
+                        var myData = {<portlet:namespace />jarray: opt};
+                        AUI().use('aui-io-request', function(A){
+                                A.io.request('<%=resourceURL.toString()%>', {
+                                dataType: 'json',
+                                method: 'post',
+                                data: myData,
+                                on: {
+                                    success: function() {
+                                        myJson = this.get('responseData');
+                                        defaultJson = myJson;
+                                        var appJson = JSON.stringify(defaultJson, null, 2);
+                                        $('#jsonArea1').val(appJson);
+                                        $('#jsonArea2').val(appJson);
+                                        printJsonArray();
+                                    }
+                                }
+                            });
+                        });
+                        break;
+                }
             }
 
             function changeJson() {
@@ -221,7 +256,7 @@
                 }
             }
             function filljsonArea1() {
-                var ans = <%= defaultArray %>;
+                var ans = defaultJson;
                 var json1 = JSON.stringify(ans, null, 2);
                 $('#jsonArea1').val(json1); 
             }
@@ -229,18 +264,35 @@
         </script>
         <div class="panel panel-default">
             <div class="panel-heading">
-                <p style="float: left"><h3>Galaxy web application </h3></p>
-                <p style="float: right">
-                    <button type="button" class="btn btn-default btn-sm" data-toggle="modal" data-target="#jsonConfig">
-                    JSON Config
-                    </button>
-                </p>
+                <p><h3>Generic web application </h3></p>
             </div>
         <div class="panel-body">
-        <p><span class="glyphicon glyphicon-hand-right"></span> Please remember to sign in to use portlet</p>
-        <button type="button" class="btn btn-primary btn-lg" onClick="openModal()">
-            Launch Galaxy request
-        </button>
+        <p style="float: left"><span class="glyphicon glyphicon-hand-right"></span> Please remember to sign in to use portlet</p>
+        <div align="right">
+            <div class="btn-group">
+                <button type="button" id="appConfig" class="btn btn-primary" data-toggle="tooltip" data-placement="bottom" title="select application">App Config</button>
+                <button type="button" class="btn btn-primary dropdown-toggle" data-toggle="dropdown">
+                    <span class="caret"></span>
+                </button>
+                <ul class="dropdown-menu" role="menu">
+                    <li><a href="javascript:void(0)" onClick="changeApp('galaxy')">Galaxy</a></li>
+                    <li><a href="javascript:void(0)" onClick="changeApp('lifewatch')">LifeWatch</a></li>
+                </ul>
+            </div>
+            <button type="button" class="btn btn-primary" data-toggle="modal" data-target="#jsonConfig">
+            JSON Config
+            </button>
+        </div>
+        <h3>
+            <div align="center" id="mainTitle">
+                GALAXY application
+            </div>
+        </h3>
+        <center>
+            <button type="button" class="btn btn-primary btn-lg" onClick="openModal()">
+                Launch request
+            </button>
+        </center>
 
         <!-- Submit record table (begin) -->    
         <div id="jobsDiv" data-modify="false"> 
@@ -257,7 +309,7 @@
             <div class="modal-content">
               <div class="modal-header">
                 <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
-                <h4 class="modal-title" id="myModalLabel">Galaxy submission panel</h4>
+                <h4 class="modal-title" id="myModalLabel">Submission panel</h4>
               </div>
               <div class="modal-body" id="modalContent" style="max-height: calc(100vh - 210px); overflow-y: auto;">
               </div>
