@@ -110,7 +110,7 @@
                                 +'" class="form-control" value="' + jsonArr[i].value + '"/></br>';
                             break;
                         case "text":
-                            out += '<input type="text" maxlength="50" id="param_'+jsonArr[i].name
+                            out += '<input type="text" id="param_'+jsonArr[i].name
                                 +'" class="form-control" value="' + jsonArr[i].value + '"/></br>';
                             break;
                         case "radio":    
@@ -138,7 +138,7 @@
                     if((jsonArr[i].tab != null) && makeTabs) {
                         var index = jsonArr[i].tab;
                         if(index < maxTab) {
-                            tabs[jsonArr[i].tab] += out;
+                            tabs[index] += out;
                         }
                         else {
                             globalOut += out;
@@ -253,7 +253,7 @@
 
         <!-- Modal (begin) -->
         <div class="modal fade  modal-hidden" id="helloTesterModal" tabindex="-1" role="dialog" aria-labelledby="HelloTester"> 
-          <div class="modal-dialog modal-lg" role="document">
+            <div class="modal-dialog modal-lg" role="document">
             <div class="modal-content">
               <div class="modal-header">
                 <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
@@ -261,9 +261,6 @@
               </div>
               <div class="modal-body" id="modalContent" style="max-height: calc(100vh - 210px); overflow-y: auto;">
               </div>
-              <script>
-                  printJsonArray();
-              </script>
               <div class="modal-footer">
                 <center>                
                 <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
@@ -327,15 +324,6 @@
                       <div id=jsonTextArea2 class="collapse">
                           <div class="form-group">
                               <textarea class="form-control" rows="50" id="jsonArea2">
-{
-    "parameters": [
-    {
-    "name":"test",
-    "type":"text",
-    "value":"value"
-    }
-    ]
-}
                               </textarea>
                           </div>
                       </div>
@@ -351,3 +339,8 @@
             </div>
           </div>
         </div>
+      <script>
+          printJsonArray();
+          var json2 = JSON.stringify(defaultJson, null, 2);
+          $('#jsonArea2').val(json2);
+      </script>
