@@ -1,30 +1,24 @@
 package it.infn.ct.indigo.portlet;
 
 import com.liferay.portal.kernel.portlet.bridges.mvc.MVCPortlet;
-import com.liferay.portal.kernel.exception.PortalException;
-import com.liferay.portal.kernel.exception.SystemException;
 import com.liferay.portal.kernel.util.ParamUtil;
 import org.osgi.service.component.annotations.Component;
-import java.text.SimpleDateFormat;
-import java.io.IOException;
-import java.util.Date;
-import java.util.ArrayList;
-import java.util.List;
 import javax.portlet.*;
+import java.text.SimpleDateFormat;
+import java.util.ArrayList;
+import java.util.Date;
+import java.util.List;
 import java.io.BufferedReader;
 import java.io.FileReader;
 import java.io.IOException;
-import java.io.FileNotFoundException;
 import java.io.File;
+import java.io.PrintWriter;
+import java.io.IOException;
 import java.nio.file.Files;
 import java.nio.file.Paths;
-import it.infn.ct.indigo.portlet.Parameter;
-import java.util.Random;
 import com.google.gson.GsonBuilder;
 import com.google.gson.Gson;
 import com.google.gson.JsonObject;
-import java.io.File;
-import java.io.PrintWriter;
 
 @Component(
 	immediate = true,
