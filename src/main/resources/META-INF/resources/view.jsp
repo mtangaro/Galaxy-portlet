@@ -86,11 +86,15 @@
                 document.getElementById("modalContent").innerHTML = out;
             }
             function printJsonArray() {
-                jsonArr = myJson.parameters;
+                jsonArr = {};
+                jsonTab = {};
+                if(myJson) {
+                    jsonArr = myJson.parameters;
+                    jsonTab = myJson.tabs;
+                }
                 var i;
                 var k;
                 printDefault();
-                jsonTab = myJson.tabs;
                 tabBegin = '<ul class="nav nav-tabs">'; 
                 var tabs = null;
                 var makeTabs = false;

@@ -80,8 +80,13 @@ public class GenericPortlet extends MVCPortlet {
                         String temp = new Gson().toJson(app);
                         jsonObject = new Gson().fromJson(temp, JsonObject.class);
                         String file = readJsonFile(app.file);
-                        JsonParser parser = new JsonParser();
-                        jsonObject.add("config", new Gson().toJsonTree(parser.parse(file).getAsJsonObject()));
+                        if(file == null) {
+                            jsonObject.add("config", null);
+                        }
+                        else {
+                            JsonParser parser = new JsonParser();
+                            jsonObject.add("config", new Gson().toJsonTree(parser.parse(file).getAsJsonObject()));
+                        }
                         break;
                     }
                 } 
@@ -131,16 +136,6 @@ public class GenericPortlet extends MVCPortlet {
     }
     private String readJsonFile(String fileName) {
         String json = readFile(pathToConfigFiles + fileName);
-        if(json == null) {
-            switch (fileName) {
-                case galaxyJsonFile:
-                    json = "{\n  \"version_of_portlet_description\": 0.2,\n  \"tabs\": [\"Virtual Hardware\", \"Galaxy Configuration\", \"Galaxy Advanced Configuration\",\"Galaxy Tools\"],\n  \"parameters\": [\n    {\n      \"display\": \"Virtual CPUs Number\",\n      \"name\": \"number_cpus\",\n      \"type\": \"list\",\n      \"value\": [\n        1,\n        2,\n        4,\n        8,\n        16,\n        32,\n        64\n      ],\n      \"tab\": 0\n    },\n    {\n      \"display\": \"Memory size (RAM)\",\n      \"name\": \"memory_size\",\n      \"type\": \"list\",\n      \"value\": [\n        \"1 GB\",\n        \"2 GB\",\n        \"4 GB\",\n        \"8 GB\",\n        \"16 GB\",\n        \"32 GB\"\n      ],\n      \"tab\": 0\n    },\n    {\n      \"display\": \"Volume storage size\",\n      \"name\": \"volume_storage\",\n      \"type\": \"list\",\n      \"value\": [\n        \"100 GB\",\n        \"1 TB\"\n      ],\n      \"tab\": 0\n    },\n    {\n      \"display\": \"SSH public key\",\n      \"name\": \"instance_key_pub\",\n      \"type\": \"text\",\n      \"value\": \"Paste here your public key\",\n      \"tab\": 0\n    },\n    {\n      \"display\": \"Galaxy version\",\n      \"name\": \"version\",\n      \"type\": \"list\",\n      \"value\": [\n        \"master\"\n      ],\n      \"tab\": 1\n    },\n    {\n      \"display\": \"Instance description (Galaxy brand)\",\n      \"name\": \"instance_description\",\n      \"type\": \"text\",\n      \"value\": \"ELIXIR-ITA Galaxy test\",\n      \"tab\": 1\n    },\n    {\n      \"display\": \"Galaxy administrator username\",\n      \"name\": \"user\",\n      \"type\": \"text\",\n      \"value\": \"admin username\",\n      \"tab\": 1\n    },\n    {\n      \"display\": \"Galaxy administrator mail address\",\n      \"name\": \"admin_email\",\n      \"type\": \"text\",\n      \"value\": \"admin mail address\",\n      \"tab\": 1\n    },\n    {\n      \"display\": \"Disable anonymous access (force everyone to log in)\",\n      \"name\": \"disable_anonymous_access\",\n      \"type\": \"list\",\n      \"value\": [\n        \"Yes\",\n        \"No\"\n      ],\n      \"tab\": 2\n    },\n    {\n      \"display\": \"Galaxy flavor\",\n      \"name\": \"galaxy_flavour\",\n      \"type\": \"list\",\n      \"value\": [\n        \"no-tools\",\n        \"NGS\"\n      ],\n      \"tab\": 3\n    }\n  ]\n}";
-                    break;
-                case lifewatchJsonFile:
-                    json = "{\n  \"parameters\": [\n    {\n      \"display\": \"Input Onedata Token\",\n      \"name\": \"input_onedata_token\",\n      \"type\": \"text\",\n      \"value\": \"token\"\n    },\n    {\n      \"display\": \"Output Onedata Token\",\n      \"name\": \"output_onedata_token\",\n      \"type\": \"text\",\n      \"value\": \"token\"\n    },\n    {\n      \"display\": \"Input Onedata Space\",\n      \"name\": \"input_onedata_space\",\n      \"type\": \"text\",\n      \"value\": \"input_space\"\n    },\n    {\n      \"display\": \"Output Onedata Space\",\n      \"name\": \"output_onedata_space\",\n      \"type\": \"text\",\n      \"value\": \"output_space\"\n    },\n    {\n      \"display\": \"Input Onedata Providers\",\n      \"name\": \"input_onedata_providers\",\n      \"type\": \"text\",\n      \"value\": \"cdmi-indigo.recas.ba.infn.it\"\n    },\n    {\n      \"display\": \"Output Onedata Providers\",\n      \"name\": \"output_onedata_providers\",\n      \"type\": \"text\",\n      \"value\": \"cdmi-indigo.recas.ba.infn.it\"\n    },\n    {\n      \"display\": \"Input Path\",\n      \"name\": \"input_path\",\n      \"type\": \"text\",\n      \"value\": \"input\"\n    },\n    {\n      \"display\": \"Output Path\",\n      \"name\": \"output_path\",\n      \"type\": \"text\",\n      \"value\": \"output\"\n    },\n    {\n      \"display\": \"Output Filenames\",\n      \"name\": \"output_filenames\",\n      \"type\": \"text\",\n      \"value\": \"sample.txt\"\n    }\n  ]\n}";
-                    break;
-            }
-        }
         return json;
     }
 
