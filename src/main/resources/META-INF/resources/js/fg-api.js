@@ -178,7 +178,7 @@
                 +'                <th>Modified</th>'
                 +'                <th>Status</th>'
                 +'                <th>Description</th>'			
-                +'                <th>web address</th>'			
+                +'                <th>Output</th>'			
                 +'            </tr>'
                 +'	</thead>'
                 +'      <tbody id="jobRecords">'
@@ -203,6 +203,7 @@
                 // Compress childs
                 $('.tablesorter-childRow td').hide();
                 // Sort table
+                /*
                 $("#jobTable").tablesorter(
                 {
                     theme : 'blue',
@@ -213,7 +214,8 @@
                 $('.tablesorter').delegate('.toggle', 'click' ,function(){
                     $(this).closest('tr').nextUntil('tr:not(.tablesorter-childRow)').find('td').toggle();
                     return false;
-                });                
+                });
+                */                
             }
             /*
              * Set empty job table             
@@ -242,7 +244,7 @@
                             jobsAll = data.tasks;
                             jobsListLength = data.tasks.length;
                             Jdiv = Math.floor((jobsListLength-1)/jobLimit);
-                            fillJobTable(data.tasks.sort( predicatBy("id") ), 0);
+                            fillJobTable(data.tasks.sort( predicatBy("date") ), 0);
                         }
                         else
                     emptyJobTable();

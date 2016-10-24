@@ -1,0 +1,90 @@
+{
+  "version_of_portlet_description": 0.2,  
+  "tabs": ["Input Parameters", "Output Parameters", "D3D Input"],
+  "parameters": [
+    {
+      "display": "Input Onedata Token",
+      "name": "input_onedata_token",
+      "type": "text",
+      "value": "token",
+      "tab": 0
+    },
+    {
+      "display": "Output Onedata Token",
+      "name": "output_onedata_token",
+      "type": "text",
+      "value": "token",
+      "tab": 1
+    },
+    {
+      "display": "Input Onedata Space",
+      "name": "input_onedata_space",
+      "type": "text",
+      "value": "AlgaeBloom",
+      "tab": 0
+    },
+    {
+      "display": "Output Onedata Space",
+      "name": "output_onedata_space",
+      "type": "text",
+      "value": "AlgaeBloom",
+      "tab": 1
+    },
+    {
+      "display": "Input Onedata Providers",
+      "name": "input_onedata_providers",
+      "type": "text",
+      "value": "cdmi-indigo.recas.ba.infn.it",
+      "tab": 0
+    },
+    {
+      "display": "Output Onedata Providers",
+      "name": "output_onedata_providers",
+      "type": "text",
+      "value": "cdmi-indigo.recas.ba.infn.it",
+      "tab": 1
+    },
+    {
+      "display": "Input Path",
+      "name": "input_path",
+      "type": "text",
+      "value": "input",
+      "tab": 0
+    },
+    {
+      "display": "Output Path",
+      "name": "output_path",
+      "type": "text",
+      "value": "output",
+      "tab": 1
+    },
+    {
+      "display": "Input Config File",
+      "name": "input_config_file",
+      "type": "text",
+      "value": "com-tut_fti_waq.inp",
+      "tab": 0
+    },
+    {
+      "display": "Output Filenames",
+      "name": "output_filenames",
+      "type": "text",
+      "value": "output.tgz",
+      "tab": 1
+    },
+    {
+      "display": "D3D Param",
+      "name": "d3d_param",
+      "type": "text",
+      "value": "",
+      "tab": 2
+    },
+    {
+      "display": "D3D Value",
+      "name": "d3d_value",
+      "type": "text",
+      "value": "",
+      "tab": 2
+    }
+  ]
+}

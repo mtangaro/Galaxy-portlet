@@ -16,9 +16,10 @@ import java.io.PrintWriter;
 import java.io.IOException;
 import java.nio.file.Files;
 import java.nio.file.Paths;
-import com.google.gson.GsonBuilder;
 import com.google.gson.Gson;
+import com.google.gson.GsonBuilder;
 import com.google.gson.JsonObject;
+import com.google.gson.JsonParser;
 
 @Component(
 	immediate = true,
@@ -37,13 +38,21 @@ import com.google.gson.JsonObject;
 public class GenericPortlet extends MVCPortlet {
     final private SimpleDateFormat sdf = new SimpleDateFormat("HH:mm:ss,SSS");
     final private String pathToConfigFiles = "/home/futuregateway/FutureGateway/portletConfigFiles/";
+    final private String configJsonFile = "generic-portlet-config.json";
     final private String galaxyJsonFile = "galaxy-template.json";  
     final private String lifewatchJsonFile = "lifewatch-template.json"; 
+    private List<Application> apps;
 
     private String logEvent(String text) {
         String log = sdf.format(new Date()) + " " + text;
         System.out.println(log);
         return log;
+    }
+
+    private void loadConfig() {
+        Parameter parameter = new Gson()
+            .fromJson(readJsonFile("generic-portlet-config.json"), Parameter.class);
+        apps = parameter.apps;
     }
 
     @Override
@@ -54,8 +63,10 @@ public class GenericPortlet extends MVCPortlet {
             String ans = ParamUtil.getString(resourceRequest, "json");
             String path = ParamUtil.getString(resourceRequest, "path");
             String jarray = ParamUtil.getString(resourceRequest, "jarray");
+            
+            JsonObject jsonObject = null; 
             if(ans != "") {
-                   JsonObject jsonObject = new Gson().fromJson(ans, JsonObject.class);
+                   jsonObject = new Gson().fromJson(ans, JsonObject.class);
 
                    Gson gson = new GsonBuilder().setPrettyPrinting().create();
                    String out = gson.toJson(jsonObject);
@@ -63,17 +74,19 @@ public class GenericPortlet extends MVCPortlet {
                    createParamFile(path, out);
             }
             if(jarray != "") {
+                Application appToSend = null;
+                for(Application app: apps) {
+                    if(jarray.equals(app.name)) {
+                        String temp = new Gson().toJson(app);
+                        jsonObject = new Gson().fromJson(temp, JsonObject.class);
+                        String file = readJsonFile(app.file);
+                        JsonParser parser = new JsonParser();
+                        jsonObject.add("config", new Gson().toJsonTree(parser.parse(file).getAsJsonObject()));
+                        break;
+                    }
+                } 
                 PrintWriter writer = resourceResponse.getWriter();
-                String jsonFileName = "";
-                switch(jarray) {
-                    case "galaxy":
-                        jsonFileName = galaxyJsonFile;
-                        break;
-                    case "lifewatch":
-                        jsonFileName = lifewatchJsonFile;
-                        break;
-                }
-                writer.write(readJsonFile(jsonFileName));
+                writer.write(jsonObject.toString());
             }
         }
         catch(Exception e) {
@@ -133,7 +146,9 @@ public class GenericPortlet extends MVCPortlet {
 
     @Override
     public void doView(RenderRequest renderRequest, RenderResponse renderResponse) throws IOException, PortletException {
+        loadConfig();
         renderRequest.setAttribute("json-array", readJsonFile(galaxyJsonFile));
+        renderRequest.setAttribute("apps-array", readJsonFile(configJsonFile));
         super.doView(renderRequest, renderResponse);
     }
 }

@@ -5,6 +5,7 @@
              * All the web app needs to configure are the following
              */
             var paramJson = { parameters: {} };
+            var defaultApps = <%= defaultApps %>;
             var myJson = <%= defaultArray %> ;
             var defaultJson = myJson;
             var jsonArr; 
@@ -12,8 +13,16 @@
             var jobLimit = 5;
             var Jdiv = 0;
             var LI="LI_0";
-            var applicationLabel = "toscaGalaxyTest";
-            
+
+            var application = {
+                id: 0,
+                app: '',
+                file: '',
+                path: '',
+                namie: '',
+                config: '',
+                display:''
+            };
             var webapp_settings = {
                 apiserver_url: ''
                ,apiserver_path : '/apis'
@@ -21,22 +30,22 @@
                ,app_id         : 103               
             };
             function changeApp(app) {
+                $('#requestButton').prop('disabled', false);
+                $('#jsonButton').prop('disabled', false);
                 var id = 103;
                 $('#mainTitle').html(app.toUpperCase() + " application");
-                switch(app) {
-                    case "galaxy":
-                        id = 103;
-                        applicationLabel = "toscaGalaxyTest";
-                        callServer("json", app) ;
-                        break;
-                    case "lifewatch":
-                        id = 104;
-                        applicationLabel = "toscaOnecloudTest";
-                        callServer("json", app) ;
-                        break;
+                callServer("json", app);
+            }
+            function welcome() {
+                $('#jobsDiv').html('');
+                var content = '';
+                for(var i=0; i<defaultApps.apps.length; i++) {
+                    content += '<li><a href="javascript:void(0)" onClick="changeApp(\''+defaultApps.apps[i].name+'\')">'+defaultApps.apps[i].display+'</a></li>';
+                    $('#dropmenu').html(content);
                 }
-                webapp_settings.app_id = id;
-                prepareJobTable();                 // Fills the job table
+                if(defaultApps.apps.length > 0) {
+                    application = defaultApps.apps[0];
+                }
             }
             /*
              * Change variable below to change delay of check status loop
@@ -68,8 +77,7 @@
             		  '/iam.token/get-token',
                         function(obj) {
             		    token = obj;
-                        //console.log(obj);
-                        prepareJobTable();                 // Fills the job table
+                        //prepareJobTable();                 // Fills the job table
             		  }
             );
             function printDefault() {
@@ -199,14 +207,14 @@
                             paramJson.parameters[jsonArr[i].name] = out;
                     }
                 }
-                callServer("submit", null);
+                callServer("submit", application.app);
             }
             function callServer(call, opt) {
                 switch(call) {
                     case "submit":
                         var myData = {
                             <portlet:namespace />json: JSON.stringify(paramJson),
-                            <portlet:namespace />path: applicationLabel
+                            <portlet:namespace />path: opt
                         };
                         AUI().use('aui-io-request', function(A){
                                 A.io.request('<%=resourceURL.toString()%>', {
@@ -225,12 +233,16 @@
                                 data: myData,
                                 on: {
                                     success: function() {
-                                        myJson = this.get('responseData');
+                                        application = this.get('responseData');
+                                        myJson = application.config;
+
+                                        webapp_settings.app_id = application.id;
                                         defaultJson = myJson;
                                         var appJson = JSON.stringify(defaultJson, null, 2);
                                         $('#jsonArea1').val(appJson);
                                         $('#jsonArea2').val(appJson);
                                         printJsonArray();
+                                        prepareJobTable();
                                     }
                                 }
                             });
@@ -274,22 +286,20 @@
                 <button type="button" class="btn btn-primary dropdown-toggle" data-toggle="dropdown">
                     <span class="caret"></span>
                 </button>
-                <ul class="dropdown-menu" role="menu">
-                    <li><a href="javascript:void(0)" onClick="changeApp('galaxy')">Galaxy</a></li>
-                    <li><a href="javascript:void(0)" onClick="changeApp('lifewatch')">LifeWatch</a></li>
+                <ul id="dropmenu" class="dropdown-menu" role="menu">
                 </ul>
             </div>
-            <button type="button" class="btn btn-primary" data-toggle="modal" data-target="#jsonConfig">
-            JSON Config
+            <button type="button" id="jsonButton" class="btn btn-primary" data-toggle="modal" data-target="#jsonConfig" disabled>
+                JSON Config
             </button>
         </div>
         <h3>
             <div align="center" id="mainTitle">
-                GALAXY application
+                Generic application
             </div>
         </h3>
         <center>
-            <button type="button" class="btn btn-primary btn-lg" onClick="openModal()">
+            <button type="button" id="requestButton" class="btn btn-primary btn-lg" onClick="openModal()" disabled>
                 Launch request
             </button>
         </center>
@@ -395,4 +405,5 @@
           printJsonArray();
           var json2 = JSON.stringify(defaultJson, null, 2);
           $('#jsonArea2').val(json2);
+          welcome();
       </script>

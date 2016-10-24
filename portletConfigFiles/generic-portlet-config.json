@@ -1,0 +1,17 @@
+{
+    "apps":
+    [{
+        "path": "/home/futuregateway/FutureGateway/fgAPIServer/apps/toscaGalaxyTest",
+        "id": 103,
+        "name": "galaxy",
+        "display": "Galaxy",
+        "json": "galaxy-template.json"
+    },
+    {
+        "path": "/home/futuregateway/FutureGateway/fgAPIServer/apps/toscaOnecloudTest",
+        "id": 104,
+        "name": "lifewatch",
+        "display": "LifeWatch",
+        "json": "lifewatch-template.json"
+    }]
+}
