@@ -60,21 +60,19 @@ public class GenericPortlet extends MVCPortlet {
             ResourceResponse resourceResponse) throws IOException,
     PortletException {
         try {
-            String ans = ParamUtil.getString(resourceRequest, "json");
+            String json = ParamUtil.getString(resourceRequest, "json");
             String path = ParamUtil.getString(resourceRequest, "path");
             String jarray = ParamUtil.getString(resourceRequest, "jarray");
-            
-            JsonObject jsonObject = null; 
-            if(ans != "") {
-                   jsonObject = new Gson().fromJson(ans, JsonObject.class);
 
+            JsonObject jsonObject = null; 
+            if(json != "") {
+                   jsonObject = new Gson().fromJson(json, JsonObject.class);
                    Gson gson = new GsonBuilder().setPrettyPrinting().create();
                    String out = gson.toJson(jsonObject);
 
                    createParamFile(path, out);
             }
             if(jarray != "") {
-                Application appToSend = null;
                 for(Application app: apps) {
                     if(jarray.equals(app.name)) {
                         String temp = new Gson().toJson(app);
@@ -100,8 +98,8 @@ public class GenericPortlet extends MVCPortlet {
         super.serveResource(resourceRequest, resourceResponse);
     }
     
-    public void createParamFile(String app, String json) {
-        String path = "/home/futuregateway/FutureGateway/fgAPIServer/apps/" + app + "/parameters.json";
+    public void createParamFile(String path, String json) {
+        path = path + "/parameters.json";
         
         File file = new File(path);
         PrintWriter printWriter = null;

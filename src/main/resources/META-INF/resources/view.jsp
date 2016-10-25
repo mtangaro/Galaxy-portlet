@@ -29,18 +29,19 @@
                ,apiserver_ver  : 'v1.0'
                ,app_id         : 103               
             };
-            function changeApp(app) {
+            function changeApp(app, display) {
                 $('#requestButton').prop('disabled', false);
                 $('#jsonButton').prop('disabled', false);
-                var id = 103;
-                $('#mainTitle').html(app.toUpperCase() + " application");
+                $('#mainTitle').html(display+" application");
                 callServer("json", app);
             }
             function welcome() {
                 $('#jobsDiv').html('');
                 var content = '';
                 for(var i=0; i<defaultApps.apps.length; i++) {
-                    content += '<li><a href="javascript:void(0)" onClick="changeApp(\''+defaultApps.apps[i].name+'\')">'+defaultApps.apps[i].display+'</a></li>';
+                    content += '<li><a href="javascript:void(0)" onClick="changeApp(\'';
+                    content += defaultApps.apps[i].name+'\',\''+defaultApps.apps[i].display+'\')">';
+                    content += defaultApps.apps[i].display+'</a></li>';
                     $('#dropmenu').html(content);
                 }
                 if(defaultApps.apps.length > 0) {
@@ -195,7 +196,11 @@
                 myDiv.innerHTML = myDiv.innerHTML + out;
             }
             function getParams() {
-                jsonArr = myJson.parameters;
+                jsonApp = {};
+                if(myJson != null) {
+                    jsonArr = myJson.parameters;
+                }
+
                 paramJson = { parameters: {} };
                 for(var i=0; i<jsonArr.length; i++) {
                     switch(jsonArr[i].type) {
@@ -211,7 +216,7 @@
                             paramJson.parameters[jsonArr[i].name] = out;
                     }
                 }
-                callServer("submit", application.app);
+                callServer("submit", application.path);
             }
             function callServer(call, opt) {
                 switch(call) {
@@ -238,9 +243,15 @@
                                 on: {
                                     success: function() {
                                         application = this.get('responseData');
-                                        myJson = application.config;
+                                        //myJson = {};
+                                        myJson = { parameters: {} };
+                                        if(application != null) {
+                                            if(application.config != null) { 
+                                                myJson = application.config;
+                                            }
+                                            webapp_settings.app_id = application.id;
+                                        }
 
-                                        webapp_settings.app_id = application.id;
                                         defaultJson = myJson;
                                         var appJson = JSON.stringify(defaultJson, null, 2);
                                         $('#jsonArea1').val(appJson);
