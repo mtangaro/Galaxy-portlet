@@ -1,17 +1,28 @@
 {
-    "apps":
-    [{
-        "path": "/home/futuregateway/FutureGateway/fgAPIServer/apps/toscaGalaxyTest",
+    "apps": [
+    {
         "id": 103,
+        "app": "toscaGalaxyTest",
+        "file": "galaxy-template.json",
+        "path": "/home/futuregateway/FutureGateway/fgAPIServer/apps/toscaGalaxyTest/",
         "name": "galaxy",
-        "display": "Galaxy",
-        "json": "galaxy-template.json"
+        "display": "Galaxy"
     },
     {
-        "path": "/home/futuregateway/FutureGateway/fgAPIServer/apps/toscaOnecloudTest",
         "id": 104,
+        "app": "toscaOnecloudTest",
+        "file": "lifewatch-template.json",
+        "path": "/home/futuregateway/FutureGateway/fgAPIServer/apps/toscaOnecloudTest/",
         "name": "lifewatch",
-        "display": "LifeWatch",
-        "json": "lifewatch-template.json"
-    }]
+        "display": "LifeWatch"
+    },
+    {
+        "id": 102,
+        "app": "toscaIDCTest",
+        "file": null,
+        "path": "/home/futuregateway/FutureGateway/fgAPIServer/apps/toscaIDCTest/",
+        "name": "idc",
+        "display": "ToscaIDC"
+    }
+    ]
 }

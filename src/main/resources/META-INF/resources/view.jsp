@@ -6,7 +6,7 @@
              */
             var paramJson = { parameters: {} };
             var defaultApps = <%= defaultApps %>;
-            var myJson = <%= defaultArray %> ;
+            var myJson = paramJson ;
             var defaultJson = myJson;
             var jsonArr; 
             var token = null;
@@ -27,7 +27,7 @@
                 apiserver_url: ''
                ,apiserver_path : '/apis'
                ,apiserver_ver  : 'v1.0'
-               ,app_id         : 103               
+               ,app_id         : 0               
             };
             function changeApp(app, display) {
                 $('#requestButton').prop('disabled', false);
@@ -297,8 +297,8 @@
         <p style="float: left"><span class="glyphicon glyphicon-hand-right"></span> Please remember to sign in to use portlet</p>
         <div align="right">
             <div class="btn-group">
-                <button type="button" id="appConfig" class="btn btn-primary" data-toggle="tooltip" data-placement="bottom" title="select application">App Config</button>
-                <button type="button" class="btn btn-primary dropdown-toggle" data-toggle="dropdown">
+                <button type="button" id="appButton" class="btn btn-primary dropdown-toggle" data-toggle="dropdown">
+                    App Config
                     <span class="caret"></span>
                 </button>
                 <ul id="dropmenu" class="dropdown-menu" role="menu">

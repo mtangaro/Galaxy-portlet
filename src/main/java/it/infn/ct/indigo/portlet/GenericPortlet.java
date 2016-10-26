@@ -140,7 +140,6 @@ public class GenericPortlet extends MVCPortlet {
     @Override
     public void doView(RenderRequest renderRequest, RenderResponse renderResponse) throws IOException, PortletException {
         loadConfig();
-        renderRequest.setAttribute("json-array", readJsonFile(galaxyJsonFile));
         renderRequest.setAttribute("apps-array", readJsonFile(configJsonFile));
         super.doView(renderRequest, renderResponse);
     }

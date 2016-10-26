@@ -1,6 +1,6 @@
 {
   "version_of_portlet_description": 0.2,
-  "tabs": ["Virtual Hardware", "Galaxy Configuration", "Galaxy Advanced Configuration","Galaxy Tools"],
+  "tabs": ["ViRtual Hardware", "Galaxy Configuration", "Galaxy Advanced Configuration","Galaxy Tools"],
   "parameters": [
     {
       "display": "Virtual CPUs Number",
