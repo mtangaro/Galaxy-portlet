@@ -17,7 +17,7 @@
                     return 0;
                 }
             }
-            function getIP(job_output_url) {
+            function getIP(job_output_url, id) {
                 web_address = null;
                 $.ajax({                     
                     type: "GET",
@@ -32,10 +32,21 @@
                     dataType: "json",                    
                     success: function(data) {
                             web_address = data.galaxy_url;
+                            info = data.cluster_creds;
+                            if(data.cluster_creds) {
+                                infoMap[id] = 'user: '+info.user+'</br></br>'+info.token;
+                            }
                         }, 
                });
                return web_address;            
             }
+            function clusterInfo(id) {
+                var repl = infoMap[id].replace(/\n/g, "</br>");
+                var data = '<center><p style="font-family:\'Courier New\'">'+repl+'</p></center>';
+                $('#information').find('.modal-body').html(data);
+                $('#information').modal();
+            }
+
             function addJobRecord(i,jrec) {                
                 job_id          = jrec.id;
                 job_status      = jrec.status;
@@ -47,7 +58,7 @@
                 if(job_status == 'DONE') {
                     for(var i=0; i<out_files.length; i++) {
                         if(out_files[i].name == 'stdout.txt') {
-                            machineIP = getIP(out_files[i].url);
+                            machineIP = getIP(out_files[i].url, job_id);
                         }
                     }                
                 }
@@ -107,7 +118,12 @@
                         +'  <td>'+job_status+'</td>'
                         +'  <td>'+job_description+'</td>'			
                         +'  <td><button type="button" class="btn btn-default btn-sm"'
-                        +'      onClick=openNewWindow("'+machineIP+'")>'+labelIP+'</button></td>'			
+                        +'      onClick=openNewWindow("'+machineIP+'")>'+labelIP+'</button>'
+                        +'      <button id="job_info_'+job_id+'" type="button" class="btn btn-default btn-sm"'
+                        +'      style="display:none;" onClick=clusterInfo('+job_id+')>'
+                        +'      <span class="glyphicon glyphicon-info-sign"></span>'
+                        +'      </button>'
+                        +'  </td>'
                         +'</tr>'
                         +'<tr class="tablesorter-childRow">' 
                         +'<td colspan="4">'
@@ -245,6 +261,9 @@
                             jobsListLength = data.tasks.length;
                             Jdiv = Math.floor((jobsListLength-1)/jobLimit);
                             fillJobTable(data.tasks.sort( predicatBy("date") ), 0);
+                            for(var m in infoMap) {
+                               $('#job_info_'+m).toggle(true); 
+                            }
                         }
                         else
                     emptyJobTable();
