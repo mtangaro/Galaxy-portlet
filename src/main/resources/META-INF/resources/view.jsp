@@ -12,7 +12,8 @@
             var jobLimit = 5;
             var Jdiv = 0;
             var LI="LI_0";
-            
+            var infoMap = new Object();
+
             var webapp_settings = {
                 apiserver_url: ''
                ,apiserver_path : '/apis'
@@ -338,7 +339,29 @@
               </div>
             </div>
           </div>
-        </div>
+      </div>
+
+    <div class="modal fade modal-hidden" id="information" role="dialog" aria-labelledby="json configuration dialog" aria-hidden="true">
+        <div class="modal-dialog modal-lg">
+
+            <!-- Modal content-->
+            <div class="modal-content">
+                <div class="modal-header">
+                    <button type="button" class="close" data-dismiss="modal">&times;</button>
+                    <h4 class="modal-title">Galaxy Elastic Cluster Information</h4>
+                </div>
+                <div class="modal-body">
+                </div>
+                <div class="modal-footer">
+                    <center>
+                        <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+                    </center>
+                </div>
+            </div>
+
+       </div>
+    </div>
+
     <script>
         printJsonArray();
         var json2 = JSON.stringify(defaultJson, null, 2);
