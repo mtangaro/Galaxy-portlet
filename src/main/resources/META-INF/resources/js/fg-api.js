@@ -42,8 +42,6 @@
             }
             function clusterInfo(id) {
                 var repl = infoMap[id].replace(/\n/g, "</br>");
-                console.log(infoMap[id]);
-                console.log(repl);
                 var data = '<center><p style="font-family:\'Courier New\'">'+repl+'</p></center>';
                 $('#information').find('.modal-body').html(data);
                 $('#information').modal();
