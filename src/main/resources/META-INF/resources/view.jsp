@@ -17,7 +17,7 @@
                 apiserver_url: ''
                ,apiserver_path : '/apis'
                ,apiserver_ver  : 'v1.0'
-               ,app_id         : 103               
+               ,app_id         : 105               
             };
             /* Settings for sgw.indigo-datacloud.eu
             var webapp_settings = {
@@ -229,7 +229,7 @@
         </script>
         <div class="panel panel-default">
             <div class="panel-heading">
-                <p style="float: left"><h3>Galaxy web application </h3></p>
+                <p style="float: left"><h3>Galaxy Elastic Cluster web application </h3></p>
                 <p style="float: right">
                     <button type="button" class="btn btn-default btn-sm" data-toggle="modal" data-target="#jsonConfig">
                     JSON Config
@@ -239,7 +239,7 @@
         <div class="panel-body">
         <p><span class="glyphicon glyphicon-hand-right"></span> Please remember to sign in to use portlet</p>
         <button type="button" class="btn btn-primary btn-lg" onClick="openModal()">
-            Launch Galaxy request
+            Launch Galaxy Elastic Cluster request
         </button>
 
         <!-- Submit record table (begin) -->    
@@ -257,7 +257,7 @@
             <div class="modal-content">
               <div class="modal-header">
                 <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
-                <h4 class="modal-title" id="myModalLabel">Galaxy submission panel</h4>
+                <h4 class="modal-title" id="myModalLabel">Galaxy Elastic Cluster submission panel</h4>
               </div>
               <div class="modal-body" id="modalContent" style="max-height: calc(100vh - 210px); overflow-y: auto;">
               </div>

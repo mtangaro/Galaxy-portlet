@@ -242,7 +242,7 @@
                             jobsAll = data.tasks;
                             jobsListLength = data.tasks.length;
                             Jdiv = Math.floor((jobsListLength-1)/jobLimit);
-                            fillJobTable(data.tasks.sort( predicatBy("id") ), 0);
+                            fillJobTable(data.tasks.sort( predicatBy("date") ), 0);
                         }
                         else
                     emptyJobTable();
