@@ -218,6 +218,9 @@
                 LI = newLI;
                 // Compress childs
                 $('.tablesorter-childRow td').hide();
+                for(var m in infoMap) {
+                   $('#job_info_'+m).toggle(true); 
+                }
                 /* 
                 // Sort table
                 $("#jobTable").tablesorter(
@@ -261,9 +264,6 @@
                             jobsListLength = data.tasks.length;
                             Jdiv = Math.floor((jobsListLength-1)/jobLimit);
                             fillJobTable(data.tasks.sort( predicatBy("date") ), 0);
-                            for(var m in infoMap) {
-                               $('#job_info_'+m).toggle(true); 
-                            }
                         }
                         else
                     emptyJobTable();
