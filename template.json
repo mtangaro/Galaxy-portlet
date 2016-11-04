@@ -1,102 +1,94 @@
 {
   "version_of_portlet_description": 0.2,
-  "tabs": ["Virtual Hardware", "Galaxy Configuration", "Galaxy Advanced Configuration","Galaxy Tools"],
+  "tabs": [
+    "Input Parameters",
+    "Output Parameters",
+    "D3D Input"
+  ],
   "parameters": [
     {
-      "display": "Virtual CPUs Number",
-      "name": "number_cpus",
-      "type": "list",
-      "value": [
-        1,
-        2,
-        4,
-        8,
-        16,
-        32,
-        64
-      ],
-      "tab": 0
-    },
-    {
-      "display": "Memory size (RAM)",
-      "name": "memory_size",
-      "type": "list",
-      "value": [
-        "1 GB",
-        "2 GB",
-        "4 GB",
-        "8 GB",
-        "16 GB",
-        "32 GB"
-      ],
-      "tab": 0
-    },
-    {
-      "display": "Volume storage size",
-      "name": "volume_storage",
-      "type": "list",
-      "value": [
-        "100 GB",
-        "1 TB"
-      ],
-      "tab": 0
-    },
-    {
-      "display": "SSH public key",
-      "name": "instance_key_pub",
+      "tab": 0,
+      "value": "token",
       "type": "text",
-      "value": "Paste here your public key",
-      "tab": 0
+      "name": "input_onedata_token",
+      "display": "Input Onedata Token"
     },
     {
-      "display": "Galaxy version",
-      "name": "version",
-      "type": "list",
-      "value": [
-        "master"
-      ],
-      "tab": 1
-    },
-    {
-      "display": "Instance description (Galaxy brand)",
-      "name": "instance_description",
+      "tab": 1,
+      "value": "token",
       "type": "text",
-      "value": "ELIXIR-ITA Galaxy test",
-      "tab": 1
+      "name": "output_onedata_token",
+      "display": "Output Onedata Token"
     },
     {
-      "display": "Galaxy administrator username",
-      "name": "user",
+      "tab": 0,
+      "value": "AlgaeBloom",
       "type": "text",
-      "value": "admin username",
-      "tab": 1
+      "name": "input_onedata_space",
+      "display": "Input Onedata Space"
     },
     {
-      "display": "Galaxy administrator mail address",
-      "name": "admin_email",
+      "tab": 1,
+      "value": "AlgaeBloom",
       "type": "text",
-      "value": "admin mail address",
-      "tab": 1
+      "name": "output_onedata_space",
+      "display": "Output Onedata Space"
     },
     {
-      "display": "Disable anonymous access (force everyone to log in)",
-      "name": "disable_anonymous_access",
-      "type": "list",
-      "value": [
-        "Yes",
-        "No"
-      ],
-      "tab": 2
+      "tab": 0,
+      "value": "cdmi-indigo.recas.ba.infn.it",
+      "type": "text",
+      "name": "input_onedata_providers",
+      "display": "Input Onedata Providers"
     },
     {
-      "display": "Galaxy flavor",
-      "name": "galaxy_flavour",
-      "type": "list",
-      "value": [
-        "no-tools",
-        "NGS"
-      ],
-      "tab": 3
+      "tab": 1,
+      "value": "cdmi-indigo.recas.ba.infn.it",
+      "type": "text",
+      "name": "output_onedata_providers",
+      "display": "Output Onedata Providers"
+    },
+    {
+      "tab": 0,
+      "value": "input",
+      "type": "text",
+      "name": "input_path",
+      "display": "Input Path"
+    },
+    {
+      "tab": 1,
+      "value": "output",
+      "type": "text",
+      "name": "output_path",
+      "display": "Output Path"
+    },
+    {
+      "tab": 0,
+      "value": "com-tut_fti_waq.inp",
+      "type": "text",
+      "name": "input_config_file",
+      "display": "Input Config File"
+    },
+    {
+      "tab": 1,
+      "value": "output.tgz",
+      "type": "text",
+      "name": "output_filenames",
+      "display": "Output Filenames"
+    },
+    {
+      "tab": 2,
+      "value": "",
+      "type": "text",
+      "name": "d3d_param",
+      "display": "D3D Param"
+    },
+    {
+      "tab": 2,
+      "value": "",
+      "type": "text",
+      "name": "d3d_value",
+      "display": "D3D Value"
     }
   ]
 }

@@ -44,6 +44,7 @@
                 job_description = jrec.description;
                 out_files       = jrec.output_files;
                 machineIP       = null;
+                /*
                 if(job_status == 'DONE') {
                     for(var i=0; i<out_files.length; i++) {
                         if(out_files[i].name == 'stdout.txt') {
@@ -56,6 +57,7 @@
                     labelIP     = 'not available';
                     machineIP   = '';
                 }
+                */
                 var OutFiles ='';
                 if(job_status == 'DONE') {
                     del_btn='<button id="cln_btn'+job_id+'"'
@@ -106,8 +108,6 @@
                         +'  <td>'+job_lastchange+'</td>'
                         +'  <td>'+job_status+'</td>'
                         +'  <td>'+job_description+'</td>'			
-                        +'  <td><button type="button" class="btn btn-default btn-sm"'
-                        +'      onClick=openNewWindow("'+machineIP+'")>'+labelIP+'</button></td>'			
                         +'</tr>'
                         +'<tr class="tablesorter-childRow">' 
                         +'<td colspan="4">'
@@ -147,7 +147,7 @@
                         }, 
                     error: function(jqXHR, textStatus, errorThrown) {
                             alert(jqXHR.status);
-                        }                   
+                        }
                }); 
             }
             /*
@@ -169,7 +169,6 @@
                 +'		<col/>'
                 +'		<col/>'	
                 +'		<col/>'	
-                +'		<col/>'	
                 +'	</colgroup>'
                 +'	<thead>'
                 +'           <tr>'
@@ -178,7 +177,6 @@
                 +'                <th>Modified</th>'
                 +'                <th>Status</th>'
                 +'                <th>Description</th>'			
-                +'                <th>web address</th>'			
                 +'            </tr>'
                 +'	</thead>'
                 +'      <tbody id="jobRecords">'
@@ -236,7 +234,7 @@
                          +webapp_settings.apiserver_path +'/'
                          +webapp_settings.apiserver_ver  +'/tasks?application='
                          +webapp_settings.app_id, 
-                    dataType: "json",                    
+                    dataType: "json",
                     success: function(data) {
                         if(data.tasks.length>0) {
                             jobsAll = data.tasks;
@@ -249,8 +247,8 @@
                     }, 
                     error: function(jqXHR, textStatus, errorThrown) {
                             alert(jqXHR.status);
-                        }                   
-               });               
+                        }
+               });
             }
             /*
              * Helper function returnin the number of jobs
@@ -375,7 +373,7 @@
                              + currentdate.getSeconds();
                 $('#submitButton').show();
                 $('#modal-content').html('');                
-                $('#jobDescription').val('Galaxy job desc '+datetime);
+                $('#jobDescription').val('LifeWatch job desc '+datetime);
                 $("#helloTesterModal").modal();
             }
             /*
