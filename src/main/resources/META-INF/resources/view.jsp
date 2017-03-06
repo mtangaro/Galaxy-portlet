@@ -5,48 +5,48 @@
              * All the web app needs to configure are the following
              */
             var paramJson = { parameters: {} };
-            var defaultApps = <%= defaultApps %>;
+            var defaultApps;
             var myJson = paramJson ;
             var defaultJson = myJson;
-            var jsonArr; 
+            var application;
+            
             var token = null;
             var jobLimit = 5;
             var Jdiv = 0;
             var LI="LI_0";
             var infoMap = new Object();
+            var jsonArr; 
 
-            var application = {
-                id: 0,
-                app: '',
-                file: '',
-                path: '',
-                namie: '',
-                config: '',
-                display:''
-            };
             var webapp_settings = {
                 apiserver_url: ''
                ,apiserver_path : '/apis'
                ,apiserver_ver  : 'v1.0'
                ,app_id         : 0               
             };
-            function changeApp(app, display) {
+            function changeApp(app_name, app_id) {
                 $('#requestButton').prop('disabled', false);
                 $('#jsonButton').prop('disabled', false);
-                $('#mainTitle').html(display+" application");
-                callServer("json", app);
+                $('#mainTitle').html(app_name+" application");
+                for(var i=0; i<defaultApps.applications.length; i++) {
+                    if(defaultApps.applications[i].id == app_id) {
+                        application = defaultApps.applications[i];
+                        webapp_settings.app_id = defaultApps.applications[i].id;
+                    }
+                }
+                callServer("json", getPath(application));
             }
             function welcome() {
+                defaultApps = getApplicationsJson();
                 $('#jobsDiv').html('');
                 var content = '';
-                for(var i=0; i<defaultApps.apps.length; i++) {
+                for(var i=0; i<defaultApps.applications.length; i++) {
                     content += '<li><a href="javascript:void(0)" onClick="changeApp(\'';
-                    content += defaultApps.apps[i].name+'\',\''+defaultApps.apps[i].display+'\')">';
-                    content += defaultApps.apps[i].display+'</a></li>';
+                    content += defaultApps.applications[i].name+'\',\''+defaultApps.applications[i].id+'\')">';
+                    content += defaultApps.applications[i].name+'</a></li>';
                     $('#dropmenu').html(content);
                 }
-                if(defaultApps.apps.length > 0) {
-                    application = defaultApps.apps[0];
+                if(defaultApps.applications.length > 0) {
+                    application = defaultApps.applications[0];
                 }
             }
             /*
@@ -75,13 +75,6 @@
                 });
                 setTimeout(checkJobs, TimerDelay); // Initialize the job check loop
             });     
-            Liferay.Service(
-            		  '/iam.token/get-token',
-                        function(obj) {
-            		    token = obj;
-                        //prepareJobTable();                 // Fills the job table
-            		  }
-            );
             function printDefault() {
                 out = '<p><b>job identifier </b></br>';
                 out += '<input type="text" maxlength="50" id="jobDescription" class="form-control"></p>';
@@ -211,13 +204,10 @@
                             break;
                         default:
                             var out = $('#param_'+jsonArr[i].name).val();
-                            if(jsonArr[i].name == "number_cpus") {
-                                out = parseInt(out);
-                            }
                             paramJson.parameters[jsonArr[i].name] = out;
                     }
                 }
-                callServer("submit", application.path);
+                callServer("submit", getPath(application));
             }
             function callServer(call, opt) {
                 switch(call) {
@@ -227,7 +217,7 @@
                             <portlet:namespace />path: opt
                         };
                         AUI().use('aui-io-request', function(A){
-                                A.io.request('<%=resourceURL.toString()%>', {
+                            A.io.request('<%=resourceURL.toString()%>', {
                                 dataType: 'json',
                                 method: 'post',
                                 data: myData
@@ -243,14 +233,11 @@
                                 data: myData,
                                 on: {
                                     success: function() {
-                                        application = this.get('responseData');
-                                        //myJson = {};
+                                        var content = this.get('responseData');
+                                        //console.log(content);
                                         myJson = { parameters: {} };
-                                        if(application != null) {
-                                            if(application.config != null) { 
-                                                myJson = application.config;
-                                            }
-                                            webapp_settings.app_id = application.id;
+                                        if((content != null) && (content.content != null)) { 
+                                            myJson = content.content;
                                         }
 
                                         defaultJson = myJson;
@@ -437,10 +424,19 @@
         </div>
     </div>
 
-        
       <script>
-          printJsonArray();
+            Liferay.Service(
+                '/iam.token/get-token',
+                function(obj) {
+                    token = obj;
+                    if(obj.token != undefined) {
+                        token = obj.token;
+                    }
+                    welcome();
+                    printJsonArray();
+                }
+            );
+        
           var json2 = JSON.stringify(defaultJson, null, 2);
           $('#jsonArea2').val(json2);
-          welcome();
       </script>

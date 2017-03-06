@@ -17,6 +17,33 @@
                     return 0;
                 }
             }
+            function getPath(current_app) {
+                for(var j=0; j<current_app.input_files.length; j++){
+                    if(current_app.input_files[j].name == "parameters.json"){
+                        return current_app.input_files[j].path;
+                    }
+                }
+                return null;
+            }
+            function getApplicationsJson() {
+                var res = null;
+                $.ajax({                     
+                    type: "GET",
+                    async: false,
+                    headers: {
+                        'Authorization':'Bearer ' + token
+                    },
+                    url: webapp_settings.apiserver_url
+                        +webapp_settings.apiserver_path +'/'
+                        +webapp_settings.apiserver_ver +'/'
+                        +'applications',
+                    dataType: "json",                    
+                    success: function(data) {
+                            res=data;
+                        }, 
+                });
+                return res;
+            }
             function getIP(job_output_url, id) {
                 web_address = null;
                 $.ajax({                     

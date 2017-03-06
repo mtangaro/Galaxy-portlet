@@ -9,6 +9,5 @@
 
 <portlet:defineObjects />
 <%
-    String defaultApps = (String)renderRequest.getAttribute("apps-array");
 %>
 <portlet:resourceURL var="resourceURL"/>
