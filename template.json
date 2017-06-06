@@ -86,8 +86,8 @@
       "name": "version",
       "type": "list",
       "value": [
-        "master",
-        "release_17.01"
+        "release_17.01",
+        "master"
       ],
       "tab": 2
     },
