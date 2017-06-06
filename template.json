@@ -99,13 +99,6 @@
       "tab": 2
     },
     {
-      "display": "Galaxy administrator username",
-      "name": "user",
-      "type": "text",
-      "value": "admin username",
-      "tab": 2
-    },
-    {
       "display": "Galaxy administrator mail address",
       "name": "admin_email",
       "type": "text",
