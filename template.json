@@ -1,6 +1,6 @@
 {
   "version_of_portlet_description": 0.2,
-  "tabs": ["Virtual Hardware", "Galaxy Configuration", "Galaxy Advanced Configuration","Galaxy Tools"],
+  "tabs": ["Virtual Hardware", "Storage", "Galaxy Configuration", "Galaxy Advanced Configuration","Galaxy Tools"],
   "parameters": [
     {
       "display": "Virtual CPUs Number",
@@ -32,6 +32,25 @@
       "tab": 0
     },
     {
+      "display": "SSH public key",
+      "name": "instance_key_pub",
+      "type": "text",
+      "value": "Paste here your public key",
+      "tab": 0
+    },
+
+    {
+      "display": "Storage type",
+      "name": "galaxy_storage_type",
+      "type": "list",
+      "value": [
+        "IaaS",
+        "Onedata",
+        "Encryption"
+      ],
+      "tab": 1
+    },
+    { 
       "display": "Volume storage size",
       "name": "volume_storage",
       "type": "list",
@@ -39,44 +58,59 @@
         "100 GB",
         "1 TB"
       ],
-      "tab": 0
+      "tab": 1
     },
     {
-      "display": "SSH public key",
-      "name": "instance_key_pub",
+      "display": "OneProvider",
+      "name": "userdata_provider",
       "type": "text",
-      "value": "Paste here your public key",
-      "tab": 0
+      "value": "indigo-wp3-onep.recas.ba.infn.it",
+      "tab": 1
+    },
+    {
+      "display": "Access Token",
+      "name": "userdata_token",
+      "type": "text",
+      "value": "Past here your token access",
+      "tab": 1
+    },
+    {   
+      "display": "Onedata Space name",
+      "name": "userdata_space",
+      "type": "text",
+      "value": "galaxy",
+      "tab": 1
     },
     {
       "display": "Galaxy version",
       "name": "version",
       "type": "list",
       "value": [
-        "master"
+        "master",
+        "release_17.01"
       ],
-      "tab": 1
+      "tab": 2
     },
     {
       "display": "Instance description (Galaxy brand)",
       "name": "instance_description",
       "type": "text",
       "value": "ELIXIR-ITA Galaxy test",
-      "tab": 1
+      "tab": 2
     },
     {
       "display": "Galaxy administrator username",
       "name": "user",
       "type": "text",
       "value": "admin username",
-      "tab": 1
+      "tab": 2
     },
     {
       "display": "Galaxy administrator mail address",
       "name": "admin_email",
       "type": "text",
       "value": "admin mail address",
-      "tab": 1
+      "tab": 2
     },
     {
       "display": "Disable anonymous access (force everyone to log in)",
@@ -86,7 +120,7 @@
         "Yes",
         "No"
       ],
-      "tab": 2
+      "tab": 3
     },
     {
       "display": "Galaxy flavor",
@@ -94,9 +128,11 @@
       "type": "list",
       "value": [
         "no-tools",
-        "NGS"
+        "NGS",
+        "TESTING",
+        "REVIEW"
       ],
-      "tab": 3
+      "tab": 4
     }
   ]
 }
