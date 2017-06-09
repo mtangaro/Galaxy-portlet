@@ -119,11 +119,11 @@
       "tab": 3
     },
     {
-      "display": "Galaxy flavor",
-      "name": "galaxy_flavour",
+      "display": "Galaxy flavors",
+      "name": "flavor",
       "type": "list",
       "value": [
-        "no-tools",
+        "No tools",
         "NGS",
         "TESTING",
         "REVIEW"
