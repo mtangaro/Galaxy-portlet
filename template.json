@@ -63,8 +63,11 @@
     {
       "display": "OneProvider",
       "name": "userdata_provider",
-      "type": "text",
-      "value": "indigo-wp3-onep.recas.ba.infn.it",
+      "type": "list",
+      "value": [
+        "indigo-wp3-onep.recas.ba.infn.it",
+        "oneprovider2.cloud.ba.infn.it"
+      ],
       "tab": 1
     },
     {
@@ -78,7 +81,7 @@
       "display": "Onedata Space name",
       "name": "userdata_space",
       "type": "text",
-      "value": "galaxy",
+      "value": "Paste here your space name (maximum 8 characters)",
       "tab": 1
     },
     {
